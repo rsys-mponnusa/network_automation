@@ -57,4 +57,4 @@ module: srl_nokia-interfaces
      +--rw swap-src-dst-mac?        boolean {srl_nokia-feat:loopback-mode-facility}?
 
 
-## try the 2 scripts to configure the SR device from REST confi interface
+## try the 2 scripts to configure the SR device from REST confi interface (focus on description & admin-state)
