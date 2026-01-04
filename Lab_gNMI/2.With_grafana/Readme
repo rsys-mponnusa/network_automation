@@ -1,0 +1,74 @@
+## after Cloning this repo how to start the lab
+
+13:17:40 INFO Removing SSH config path=/etc/ssh/ssh_config.d/clab-sr_lab.conf
+root@digi-oss:/home/labadmin/mohan/2jan26# cd ..
+root@digi-oss:/home/labadmin/mohan# mkdir 2jan26_grafana
+root@digi-oss:/home/labadmin/mohan# cd 2jan26_grafana/
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# ls
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# vi sr_lab.clab.yml
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# cp ../2jan26/sr1.cfg .
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# cp ../2jan26/sr2.cfg .
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# vi gnmic-config.yml
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# vi prometheus.yml
+root@digi-oss:/home/labadmin/mohan/2jan26_grafana# sudo containerlab deploy -t sr_lab.clab.yml
+13:20:16 INFO Containerlab started version=0.71.1
+13:20:16 INFO Parsing & checking topology file=sr_lab.clab.yml
+13:20:16 INFO Creating lab directory path=/home/labadmin/mohan/2jan26_grafana/clab-sr_lab
+13:20:16 INFO Creating container name=grafana
+13:20:16 INFO Creating container name=sr2
+13:20:16 INFO Creating container name=prometheus
+13:20:16 INFO Creating container name=sr1
+13:20:16 INFO Creating container name=gnmic
+13:20:16 INFO Running postdeploy actions kind=nokia_srlinux node=sr1
+13:20:16 INFO Created link: sr1:e1-1 ▪┄┄▪ sr2:e1-1
+13:20:16 INFO Running postdeploy actions kind=nokia_srlinux node=sr2
+13:20:40 INFO Adding host entries path=/etc/hosts
+13:20:40 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-sr_lab.conf
+🎉 A newer containerlab version (0.72.0) is available!
+Release notes: https://containerlab.dev/rn/0.72/
+Run 'sudo clab version upgrade' or see https://containerlab.dev/install/ for installation options.
+╭────────────────────────┬─────────────────────────────────┬─────────┬───────────────────╮
+│          Name          │            Kind/Image           │  State  │   IPv4/6 Address  │
+├────────────────────────┼─────────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-gnmic      │ linux                           │ running │ 172.20.20.11      │
+│                        │ ghcr.io/openconfig/gnmic:latest │         │ 3fff:172:20:20::b │
+├────────────────────────┼─────────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-grafana    │ linux                           │ running │ 172.20.20.8       │
+│                        │ grafana/grafana:latest          │         │ 3fff:172:20:20::8 │
+├────────────────────────┼─────────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-prometheus │ linux                           │ running │ 172.20.20.7       │
+│                        │ prom/prometheus:latest          │         │ 3fff:172:20:20::7 │
+├────────────────────────┼─────────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-sr1        │ nokia_srlinux                   │ running │ 172.20.20.9       │
+│                        │ ghcr.io/nokia/srlinux:latest    │         │ 3fff:172:20:20::9 │
+├────────────────────────┼─────────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-sr2        │ nokia_srlinux                   │ running │ 172.20.20.10      │
+│                        │ ghcr.io/nokia/srlinux:latest    │         │ 3fff:172:20:20::a │
+╰────────────────────────┴─────────────────────────────────┴─────────┴───────────────────╯
+
+Deploy and Visualize
+
+Deploy: Run sudo containerlab deploy -t sr_lab.clab.yml.
+Access Prometheus: Go to http://localhost:9090 to verify the targets are "UP" and query srl_interface_statistics_out_unicast_packets.
+Access Grafana: Go to http://localhost:3000 (default login: admin/admin).
+Add Prometheus as a data source with the URL http://prometheus:9090.
+Create a new dashboard and use the metric 
+interface_statistics_out_unicast_packets to see your real-time ping traffic. 
+
+
+## port-forward (to access from laptop browser locally)
+[mponnusa.W10-GdghJqoDo1t] ⮞ ssh -L 3000:localhost:3000 -L 9090:localhost:9090 -L 57400:localhost:57400 labadmin@172.27.69.49
+Welcome to Ubuntu 24.04 LTS (GNU/Linux 6.8.0-85-generic x86_64)
+
+##verify GNMI-getting-it
+root@digi-oss:/home/labadmin# curl http://172.20.20.11:9804/metrics
+# HELP interface_statistics_carrier_transitions gNMIc generated metric
+# TYPE interface_statistics_carrier_transitions untyped
+interface_statistics_carrier_transitions{interface_name="ethernet-1/1",source="sr1",subscription_name="interface-stats"} 0
+interface_statistics_carrier_transitions{interface_name="ethernet-1/1",source="sr2",subscription_name="interface-stats"} 0
+# HELP interface_statistics_in_broadcast_packets gNMIc generated metric
+# TYPE interface_statistics_in_broadcast_packets untyped
+
+refer below blog for complete configration
+https://geek-networking.blogspot.com/2026/01/gnmiwithprometheusgrafana.html
+
