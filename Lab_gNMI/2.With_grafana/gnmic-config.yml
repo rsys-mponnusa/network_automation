@@ -1,0 +1,15 @@
+targets:
+  sr1: {address: "sr1:57400", username: admin, password: NokiaSrl1!, skip-verify: true}
+  sr2: {address: "sr2:57400", username: admin, password: NokiaSrl1!, skip-verify: true}
+
+subscriptions:
+  interface-stats:
+    paths: ["/interface[name=ethernet-1/1]/statistics"]
+    stream-mode: sample
+    sample-interval: 5s
+
+outputs:
+  prom-output:
+    type: prometheus
+    listen: ":9804" # Prometheus will scrape this address
+

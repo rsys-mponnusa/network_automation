@@ -1,0 +1,29 @@
+name: sr_lab
+topology:
+  nodes:
+    sr1: {kind: nokia_srlinux, image: ghcr.io/nokia/srlinux:latest, startup-config: sr1.cfg}
+    sr2: {kind: nokia_srlinux, image: ghcr.io/nokia/srlinux:latest, startup-config: sr2.cfg}
+    
+    # gNMIc Collector
+    gnmic:
+      kind: linux
+      image: ghcr.io/openconfig/gnmic:latest
+      binds: [gnmic-config.yml:/app/gnmic-config.yml:ro]
+      cmd: "--config /app/gnmic-config.yml subscribe"
+      
+    # Prometheus TSDB
+    prometheus:
+      kind: linux
+      image: prom/prometheus:latest
+      binds: [prometheus.yml:/etc/prometheus/prometheus.yml:ro]
+      ports: ["9090:9090"]
+
+    # Grafana Visualization
+    grafana:
+      kind: linux
+      image: grafana/grafana:latest
+      ports: ["3000:3000"]
+
+  links:
+    - endpoints: ["sr1:e1-1", "sr2:e1-1"]
+

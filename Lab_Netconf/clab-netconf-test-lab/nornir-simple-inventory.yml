@@ -1,0 +1,11 @@
+---
+client:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.5
+router1:
+    username: admin
+    password: NokiaSrl1!
+    platform: nokia_srlinux
+    hostname: 172.20.20.6

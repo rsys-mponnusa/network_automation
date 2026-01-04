@@ -1,0 +1,26 @@
+---
+gnmic:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.11
+grafana:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.8
+prometheus:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.7
+sr1:
+    username: admin
+    password: NokiaSrl1!
+    platform: nokia_srlinux
+    hostname: 172.20.20.9
+sr2:
+    username: admin
+    password: NokiaSrl1!
+    platform: nokia_srlinux
+    hostname: 172.20.20.10

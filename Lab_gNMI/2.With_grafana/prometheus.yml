@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: 'gnmic-telemetry'
+    static_configs:
+      - targets: ['gnmic:9804']
+

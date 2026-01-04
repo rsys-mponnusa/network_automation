@@ -1,0 +1,16 @@
+name: sr_lab
+
+topology:
+  nodes:
+    sr1:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:latest
+      startup-config: sr1.cfg
+    sr2:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:latest
+      startup-config: sr2.cfg
+
+  links:
+    - endpoints: ["sr1:e1-1", "sr2:e1-1"]
+

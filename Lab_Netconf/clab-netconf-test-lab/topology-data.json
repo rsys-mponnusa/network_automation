@@ -1,0 +1,85 @@
+{
+  "name": "netconf-test-lab",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-454f2d7ebda6",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAF9XQLEXZCor452dt/G0F+s3rToYIIaCi4o0OXn0pnW"],
+  "nodes": {
+    "client": {
+      "index": "0",
+      "shortname": "client",
+      "longname": "clab-netconf-test-lab-client",
+      "fqdn": "client.netconf-test-lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/22/clab-netconf-test-lab/client",
+      "kind": "linux",
+      "image": "alpine:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/22/clab-netconf-test-lab/client",
+        "clab-node-longname": "clab-netconf-test-lab-client",
+        "clab-node-name": "client",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/22/topology.clab.yml",
+        "containerlab": "netconf-test-lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "router1": {
+      "index": "1",
+      "shortname": "router1",
+      "longname": "clab-netconf-test-lab-router1",
+      "fqdn": "router1.netconf-test-lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/22/clab-netconf-test-lab/router1",
+      "kind": "nokia_srlinux",
+      "image": "ghcr.io/nokia/srlinux:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "1a:be:01:00:00:00",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "nokia_srlinux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/22/clab-netconf-test-lab/router1",
+        "clab-node-longname": "clab-netconf-test-lab-router1",
+        "clab-node-name": "router1",
+        "clab-node-type": "ixr-d2l",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/22/topology.clab.yml",
+        "containerlab": "netconf-test-lab"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+  ]
+}

@@ -1,0 +1,13 @@
+name: netconf-test-lab
+topology:
+  nodes:
+    router1:
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:latest
+    client:
+      kind: linux
+      image: alpine:latest
+      exec:
+        - apk add --no-cache python3 py3-pip openssh
+        - pip install ncclient  # Python NETCONF library
+

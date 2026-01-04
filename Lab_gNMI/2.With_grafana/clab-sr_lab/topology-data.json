@@ -1,0 +1,218 @@
+{
+  "name": "sr_lab",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-454f2d7ebda6",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAF9XQLEXZCor452dt/G0F+s3rToYIIaCi4o0OXn0pnW"],
+  "nodes": {
+    "gnmic": {
+      "index": "0",
+      "shortname": "gnmic",
+      "longname": "clab-sr_lab-gnmic",
+      "fqdn": "gnmic.sr_lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/gnmic",
+      "kind": "linux",
+      "image": "ghcr.io/openconfig/gnmic:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.11",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::b",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/gnmic",
+        "clab-node-longname": "clab-sr_lab-gnmic",
+        "clab-node-name": "gnmic",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/2jan26_grafana/sr_lab.clab.yml",
+        "containerlab": "sr_lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "grafana": {
+      "index": "1",
+      "shortname": "grafana",
+      "longname": "clab-sr_lab-grafana",
+      "fqdn": "grafana.sr_lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/grafana",
+      "kind": "linux",
+      "image": "grafana/grafana:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.8",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::8",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/grafana",
+        "clab-node-longname": "clab-sr_lab-grafana",
+        "clab-node-name": "grafana",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/2jan26_grafana/sr_lab.clab.yml",
+        "containerlab": "sr_lab"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "0.0.0.0",
+          "host-port": 3000,
+          "port": 3000,
+          "protocol": "tcp"
+        },
+        {
+          "host-ip": "::",
+          "host-port": 3000,
+          "port": 3000,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "prometheus": {
+      "index": "2",
+      "shortname": "prometheus",
+      "longname": "clab-sr_lab-prometheus",
+      "fqdn": "prometheus.sr_lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/prometheus",
+      "kind": "linux",
+      "image": "prom/prometheus:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.7",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::7",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/prometheus",
+        "clab-node-longname": "clab-sr_lab-prometheus",
+        "clab-node-name": "prometheus",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/2jan26_grafana/sr_lab.clab.yml",
+        "containerlab": "sr_lab"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "0.0.0.0",
+          "host-port": 9090,
+          "port": 9090,
+          "protocol": "tcp"
+        },
+        {
+          "host-ip": "::",
+          "host-port": 9090,
+          "port": 9090,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "sr1": {
+      "index": "3",
+      "shortname": "sr1",
+      "longname": "clab-sr_lab-sr1",
+      "fqdn": "sr1.sr_lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/sr1",
+      "kind": "nokia_srlinux",
+      "image": "ghcr.io/nokia/srlinux:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.9",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::9",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "1a:15:03:00:00:00",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "nokia_srlinux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/sr1",
+        "clab-node-longname": "clab-sr_lab-sr1",
+        "clab-node-name": "sr1",
+        "clab-node-type": "ixr-d2l",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/2jan26_grafana/sr_lab.clab.yml",
+        "containerlab": "sr_lab"
+      },
+      "port-bindings": [
+      ]
+    },
+    "sr2": {
+      "index": "4",
+      "shortname": "sr2",
+      "longname": "clab-sr_lab-sr2",
+      "fqdn": "sr2.sr_lab.io",
+      "group": "",
+      "labdir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/sr2",
+      "kind": "nokia_srlinux",
+      "image": "ghcr.io/nokia/srlinux:latest",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.10",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::a",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "1a:8d:04:00:00:00",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-454f2d7ebda6",
+        "clab-node-group": "",
+        "clab-node-kind": "nokia_srlinux",
+        "clab-node-lab-dir": "/home/labadmin/mohan/2jan26_grafana/clab-sr_lab/sr2",
+        "clab-node-longname": "clab-sr_lab-sr2",
+        "clab-node-name": "sr2",
+        "clab-node-type": "ixr-d2l",
+        "clab-owner": "root",
+        "clab-topo-file": "/home/labadmin/mohan/2jan26_grafana/sr_lab.clab.yml",
+        "containerlab": "sr_lab"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "endpoints": {
+        "a": {
+          "node": "sr1",
+          "interface": "e1-1",
+          "mac": "aa:c1:ab:11:b8:56",
+          "peer": "z"
+        },
+        "z": {
+          "node": "sr2",
+          "interface": "e1-1",
+          "mac": "aa:c1:ab:82:d9:23",
+          "peer": "a"
+        }
+      }
+    }
+  ]
+}
