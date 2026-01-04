@@ -1,0 +1,86 @@
+##after cloning repo how to test
+
+1. Start container lab
+
+root@digi-oss:/home/labadmin/mohan/2jan26# sudo containerlab deploy -t sr_lab.clab.yml
+13:04:02 INFO Containerlab started version=0.71.1
+13:04:02 INFO Parsing & checking topology file=sr_lab.clab.yml
+13:04:02 INFO Creating lab directory path=/home/labadmin/mohan/2jan26/clab-sr_lab
+13:04:03 INFO Creating container name=sr2
+13:04:03 INFO Creating container name=sr1
+13:04:03 INFO Running postdeploy actions kind=nokia_srlinux node=sr1
+13:04:03 INFO Created link: sr1:e1-1 ▪┄┄▪ sr2:e1-1
+13:04:03 INFO Running postdeploy actions kind=nokia_srlinux node=sr2
+13:04:25 INFO Adding host entries path=/etc/hosts
+13:04:25 INFO Adding SSH config for nodes path=/etc/ssh/ssh_config.d/clab-sr_lab.conf
+🎉 A newer containerlab version (0.72.0) is available!
+Release notes: https://containerlab.dev/rn/0.72/
+Run 'sudo clab version upgrade' or see https://containerlab.dev/install/ for installation options.
+╭────────────────┬──────────────────────────────┬─────────┬───────────────────╮
+│       Name      │          Kind/Image          │  State  │   IPv4/6 Address  │
+├─────────────────┼──────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-sr1 │ nokia_srlinux                │ running │ 172.20.20.7       │
+│                 │ ghcr.io/nokia/srlinux:latest │         │ 3fff:172:20:20::7 │
+├─────────────────┼──────────────────────────────┼─────────┼───────────────────┤
+│ clab-sr_lab-sr2 │ nokia_srlinux                │ running │ 172.20.20.8       │
+│                 │ ghcr.io/nokia/srlinux:latest │         │ 3fff:172:20:20::8 │
+╰─────────────────┴──────────────────────────────┴─────────┴───────────────────╯
+
+
+#verify ping works
+A:root@sr1# show interface ethernet-1/1
+=================================================================================================================================================================================
+ethernet-1/1 is up, speed 25G, type None
+  ethernet-1/1.0 is up
+    Network-instances:
+      * Name: default (default)
+    Encapsulation   : null
+    Type            : routed
+    IPv4 addr    : 192.168.0.1/31 (static, preferred, primary)
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+=================================================================================================================================================================================
+
+--{ running }--[  ]--
+A:root@sr1# ping network-instance default 192.168.0.0
+Using network instance default
+PING 192.168.0.0 (192.168.0.0) 56(84) bytes of data.
+64 bytes from 192.168.0.0: icmp_seq=1 ttl=64 time=51.8 ms
+64 bytes from 192.168.0.0: icmp_seq=2 ttl=64 time=2.28 ms
+64 bytes from 192.168.0.0: icmp_seq=3 ttl=64 time=2.26 ms
+
+
+
+##GNMIC tool & subscribe
+
+(pyang-venv) root@digi-oss:/home/labadmin/mohan/test# gnmic -a 172.20.20.7:57400 -u admin -p NokiaSrl1! --skip-verify   subscribe   --path "/interface[name=ethernet-1/1]/statistics/out-unicast-packets"   --stream-mode sample   --sample-interval 2s
+{
+  "source": "172.20.20.7:57400",
+  "subscription-name": "default-1767359634",
+  "timestamp": 1767359634573513325,
+  "time": "2026-01-02T13:13:54.573513325Z",
+  "updates": [
+    {
+      "Path": "interface[name=ethernet-1/1]/statistics/out-unicast-packets",
+      "values": {
+        "interface/statistics/out-unicast-packets": "313"
+      }
+    }
+  ]
+}
+{
+  "sync-response": true
+}
+{
+  "source": "172.20.20.7:57400",
+  "subscription-name": "default-1767359634",
+  "timestamp": 1767359636573101050,
+  "time": "2026-01-02T13:13:56.57310105Z",
+  "updates": [
+    {
+      "Path": "interface[name=ethernet-1/1]/statistics/out-unicast-packets",
+      "values": {
+        "interface/statistics/out-unicast-packets": "315"
+      }
+    }
+  ]
+}
