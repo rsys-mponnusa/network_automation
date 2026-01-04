@@ -58,3 +58,12 @@ module: srl_nokia-interfaces
 
 
 ## try the 2 scripts to configure the SR device from REST confi interface (focus on description & admin-state)
+
+##after successfully running both the script you can verify  from ssh terminal 
+#verify from Device sr_cli
+A:root@router1# show  interface brief
++---------------------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+|        Port         |         Admin State         |         Oper State          |            Speed            |            Type             |         Description         |
++=====================+=============================+=============================+=============================+=============================+=============================+
+| ethernet-1/1        | enable                      | down                        | 25G                         |                             | happy_new_year_2026         |
+| ethernet-1/2        | disable                     | down                        | 25G                         |                             |                             |
