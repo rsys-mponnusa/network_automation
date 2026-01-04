@@ -1,0 +1,60 @@
+#After cloning repo how to run
+sudo containerlab deploy -t topology.clab.yml
+
+#Verifty
+root@digi-oss:/home/labadmin# docker ps
+CONTAINER ID   IMAGE                          COMMAND                  CREATED          STATUS          PORTS     NAMES
+ac2e75143675   ghcr.io/nokia/srlinux:latest   "/tini -- /usr/local…"   4 minutes ago    Up 4 minutes              clab-netconf-test-lab-router1
+071ddc58f82d   alpine:latest                  "/bin/sh"                4 minutes ago    Up 4 minutes              clab-netconf-test-lab-client
+
+#Login to container
+root@digi-oss:/home/labadmin# docker exec -it ac2e75143675 bash
+
+root@router1:/# sr_cli
+Loading environment configuration file(s): ['/etc/opt/srlinux/srlinux.rc']
+Welcome to the Nokia SR Linux CLI.
+--{ running }--[  ]--
+A:root@router1# show interface brief
++---------------------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+-----------------------------+
+|        Port         |         Admin State         |         Oper State          |            Speed            |            Type             |         Description         |
++=====================+=============================+=============================+=============================+=============================+=============================+
+| ethernet-1/1        | disable                     | down                        | 25G                         |                             |                             |
+| ethernet-1/2        | disable                     | down                        | 25G                         |                             |                             |
+
+A:root@router1#quit
+
+#get the IP of the container to programmatically connect
+root@digi-oss:/home/labadmin# docker inspect ac2e75143675 | grep IPAdd
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "172.20.20.6",
+
+Setup python venv
+python3 -m venv ~/pyang-venv
+source ~/pyang-venv/bin/activate
+
+
+Copy yang file from device to host-server to test yang browse with pyang
+root@digi-oss:/home/labadmin/mohan# docker cp ac2e75143675://opt/srlinux/models/srl_nokia/models/interfaces/srl_nokia-interfaces.yang .
+
+
+Install pyang for browsing yang-model
+(pyang-venv) root@digi-oss:/home/labadmin/mohan# pip install pyang
+
+(pyang-venv) root@digi-oss:/home/labadmin/mohan/test# pyang -f tree srl_nokia-interfaces.yang
+module: srl_nokia-interfaces
+  +--rw interface* [name]
+     +--rw name                     srl_nokia-comm:interface-all
+     +--rw description?             srl_nokia-comm:description
+     +--rw admin-state?             srl_nokia-comm:admin-state
+     +--rw num-physical-channels?   uint8 {srl_nokia-feat:num-physical-channels}?
+     +--rw breakout-mode! {srl_nokia-feat:port-breakout}?
+     |  +--rw num-breakout-ports       enumeration
+     |  +--rw breakout-port-speed      enumeration
+     |  +--rw num-physical-channels?   uint8 {srl_nokia-feat:num-physical-channels-breakout}?
+     +--rw mtu?                     uint16
+     +--rw loopback-mode?           loopback-mode-type {not srl_nokia-feat:platform-vsrl}?
+     +--rw swap-src-dst-mac?        boolean {srl_nokia-feat:loopback-mode-facility}?
+
+
+## try the 2 scripts to configure the SR device from REST confi interface
